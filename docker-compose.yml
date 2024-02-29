@@ -1,0 +1,24 @@
+services:
+  reverse-proxy:
+    build: ./nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/etc/nginx/conf.d:/etc/nginx/conf.d
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  web1:
+    image: php:7.2-apache
+    ports:
+      - "8080:80"
+    volumes:
+      - ./web1/var/www/html:/var/www/html
+
+  web2:
+    image: php:7.2-apache
+    ports:
+      - "8081:80"
+    volumes:
+      - ./web2/var/www/html:/var/www/html
